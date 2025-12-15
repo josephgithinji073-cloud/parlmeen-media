@@ -1,0 +1,14 @@
+pearlmeen web/
+├─ index.html
+├─ about.html
+├─ work.html
+├─ impact.html
+├─ contact.html
+├─ media.html
+├─ radio.html
+├─ css/
+│   └─ style.css
+├─ js/
+│   └─ main.js
+└─ images/
+    └─ pearlmeen-logo.png   <-- your logo goes here
