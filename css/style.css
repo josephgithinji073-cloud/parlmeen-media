@@ -19,7 +19,7 @@
     --purple-dark: #2a1b3d;
     --purple-mid: #44318d;
     --sand-light: #e6d3a3;
-    --cream-light: #f8f3e8;
+    --cream-light: #3deeb3;
 
     --glass: rgba(255, 255, 255, 0.08);
     --glass-strong: rgba(255, 255, 255, 0.12);
@@ -35,9 +35,9 @@ body {
     font-family: 'Inter', sans-serif;
     line-height: 1.75;
     background:
-        radial-gradient(circle at top, #1b1330 0%, #0e0e0e 45%),
+        radial-gradient(circle at top, #340d97 0%, #0e0e0e 45%),
         linear-gradient(180deg, #0b0b0b, #121212);
-    color: #f5f5f5;
+    color: #9db3ae;
 }
 
 /* =========================
