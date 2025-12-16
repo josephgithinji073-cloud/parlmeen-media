@@ -6,8 +6,8 @@
 
     <!-- SEO -->
     <title>Contact Us | Pearlmeen Media – African Stories Creating Change</title>
-    <meta name="description" content="Get in touch with Pearlmeen Media to collaborate on African storytelling projects. We work with communities, governments, NGOs, and international organizations to create positive change.">
-    <meta name="keywords" content="contact Pearlmeen Media, African storytelling collaboration, media projects, community engagement, podcasts, documentaries, online radio">
+    <meta name="description" content="Get in touch with Pearlmeen Media to collaborate on African storytelling projects. We partner with communities, NGOs, governments, and international organizations to create positive change.">
+    <meta name="keywords" content="Pearlmeen Media contact, African storytelling collaboration, media partnerships, documentaries, podcasts, online radio">
     <meta name="author" content="Pearlmeen Media">
     <link rel="canonical" href="https://yourdomain.com/contact.html">
 
@@ -24,6 +24,7 @@
     <meta name="twitter:description" content="Reach out to Pearlmeen Media to collaborate on impactful African storytelling projects.">
     <meta name="twitter:image" content="images/og-contact.jpg">
 
+    <!-- Styles -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -31,9 +32,9 @@
 <!-- HEADER -->
 <header>
     <div class="logo">
-    <a href="index.html">
-        <img src="images/pearlmeen-logo.png" alt="Pearlmeen Media Logo">
-    </a>
+        <a href="index.html">
+            <img src="images/pearlmeen-logo.png" alt="Pearlmeen Media Logo">
+        </a>
     </div>
 
     <nav>
@@ -48,35 +49,88 @@
 <!-- PAGE HERO -->
 <section class="page-hero">
     <h1>Get in Touch</h1>
-    <p>Let’s collaborate to create impactful stories</p>
+    <p>Let’s collaborate to create stories that inspire change</p>
 </section>
 
-<!-- CONTACT SECTION -->
-<section class="contact-section">
-    <!-- Contact Info -->
-    <div class="contact-info">
-        <h2>Contact Information</h2>
-        <p><strong>Email:</strong> info@pearlmeenmedia.com</p>
-        <p><strong>Phone:</strong> +254 700 000 000</p>
-        <p><strong>Location:</strong> Africa (Online-based)</p>
-        <p>We welcome partnerships with communities, governments, NGOs, and international organizations.</p>
-    </div>
+<!-- CONTACT -->
+<section class="content">
+    <div class="work-grid">
 
-    <!-- Contact Form -->
-    <div class="contact-form">
-        <h2>Send Us a Message</h2>
-        <form id="contactForm">
-            <input type="text" id="name" placeholder="Your Name" required>
-            <input type="email" id="email" placeholder="Your Email" required>
-            <input type="text" id="organization" placeholder="Organization (Optional)">
-            <textarea id="message" placeholder="Your Message" required></textarea>
-            <button type="submit" class="btn">Send Message</button>
-        </form>
+        <!-- Contact Information -->
+        <div class="work-card">
+            <h2>Contact Information</h2>
+            <p>
+                We are an Africa-focused digital media organization working remotely
+                with partners across the continent and globally.
+            </p>
 
-        <!-- Success Message -->
-        <p id="successMessage" style="display:none; color:green; margin-top:15px;">
-            Thank you! Your message has been sent.
-        </p>
+            <p><strong>Email:</strong><br> info@pearlmeenmedia.com</p>
+            <p><strong>Phone:</strong><br> +254 700 000 000</p>
+            <p><strong>Location:</strong><br> Africa (Online-based)</p>
+
+            <p style="margin-top:20px;">
+                We welcome collaborations with communities, NGOs, governments,
+                cultural institutions, and international organizations.
+            </p>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="work-card">
+            <h2>Send Us a Message</h2>
+
+            <form id="contactForm" novalidate>
+                <div style="margin-bottom:16px;">
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Your Full Name"
+                        required
+                        style="width:100%; padding:14px; border-radius:14px; border:none;"
+                    >
+                </div>
+
+                <div style="margin-bottom:16px;">
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Your Email Address"
+                        required
+                        style="width:100%; padding:14px; border-radius:14px; border:none;"
+                    >
+                </div>
+
+                <div style="margin-bottom:16px;">
+                    <input
+                        type="text"
+                        id="organization"
+                        name="organization"
+                        placeholder="Organization (Optional)"
+                        style="width:100%; padding:14px; border-radius:14px; border:none;"
+                    >
+                </div>
+
+                <div style="margin-bottom:22px;">
+                    <textarea
+                        id="message"
+                        name="message"
+                        placeholder="Tell us about your project or inquiry"
+                        rows="5"
+                        required
+                        style="width:100%; padding:14px; border-radius:14px; border:none;"
+                    ></textarea>
+                </div>
+
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+
+            <!-- Success Message -->
+            <p id="successMessage" style="display:none; margin-top:18px;">
+                Thank you. Your message has been received and we will respond shortly.
+            </p>
+        </div>
+
     </div>
 </section>
 
