@@ -76,9 +76,12 @@ header nav a {
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, transform 0.3s ease;
 }
-header nav a:hover { color: var(--purple-mid); }
+header nav a:hover {
+    color: var(--purple-mid);
+    transform: translateY(-2px);
+}
 
 /* =========================
    HERO
@@ -93,7 +96,6 @@ header nav a:hover { color: var(--purple-mid); }
     overflow: hidden;
 }
 
-/* Hero background image */
 .hero::before {
     content: '';
     position: absolute;
@@ -103,18 +105,20 @@ header nav a:hover { color: var(--purple-mid); }
     filter: brightness(0.65);
 }
 
-/* Animated gradient overlay */
 .hero::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(-45deg, rgba(68,49,141,0.6), rgba(42,27,61,0.6), rgba(68,49,141,0.6), rgba(42,27,61,0.6));
+    background: linear-gradient(-45deg,
+        rgba(68,49,141,0.6),
+        rgba(42,27,61,0.6),
+        rgba(68,49,141,0.6),
+        rgba(42,27,61,0.6));
     background-size: 400% 400%;
     z-index: 1;
     animation: gradientShift 15s ease infinite;
 }
 
-/* Hero content */
 .hero-content {
     position: relative;
     z-index: 2;
@@ -128,6 +132,7 @@ header nav a:hover { color: var(--purple-mid); }
 }
 
 .hero-content h1 { font-size: 56px; margin-bottom: 20px; }
+
 .hero-content p {
     font-size: 19px;
     max-width: 520px;
@@ -151,7 +156,7 @@ header nav a:hover { color: var(--purple-mid); }
 }
 
 .btn:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
     box-shadow: 0 25px 60px rgba(68,49,141,0.9);
 }
 
@@ -164,14 +169,42 @@ section {
 }
 
 /* =========================
-   ABOUT PREVIEW
+   ABOUT SPLIT (NEW)
 ========================= */
-.about-preview {
-    max-width: 900px;
-    margin: auto;
-    text-align: center;
-    color: var(--text-muted);
+.about-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 70px;
+    align-items: center;
 }
+
+.about-text {
+    animation: slideInLeft 1.2s ease both;
+}
+
+.about-slider {
+    position: relative;
+    height: 420px;
+    border-radius: 26px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    animation: slideInRight 1.2s ease both;
+}
+
+.about-slider img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    animation: sliderFade 16s infinite;
+}
+
+.about-slider img:nth-child(1) { animation-delay: 0s; }
+.about-slider img:nth-child(2) { animation-delay: 4s; }
+.about-slider img:nth-child(3) { animation-delay: 8s; }
+.about-slider img:nth-child(4) { animation-delay: 12s; }
 
 /* =========================
    SERVICES
@@ -192,7 +225,7 @@ section {
 }
 
 .service-box div:hover {
-    transform: translateY(-10px);
+    transform: translateY(-12px);
     box-shadow: 0 30px 60px rgba(68,49,141,0.45);
 }
 
@@ -211,62 +244,12 @@ section {
     background: var(--glass);
     padding: 24px;
     border-radius: 32px;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease, transform 0.3s ease;
 }
 
 .focus li:hover {
     background: linear-gradient(135deg, var(--purple-dark), var(--purple-mid));
-}
-
-/* =========================
-   PAGE HERO
-========================= */
-.page-hero {
-    background: linear-gradient(135deg, var(--purple-dark), var(--purple-mid));
-    color: #fff;
-    text-align: center;
-    padding: 120px 30px;
-}
-
-.page-hero h1 { font-size: 44px; }
-.page-hero p { margin-top: 15px; color: var(--text-muted); }
-
-/* =========================
-   CONTENT
-========================= */
-.content { max-width: 900px; margin: auto; }
-.content h2 { text-align: left; margin-top: 60px; }
-
-/* =========================
-   VALUES
-========================= */
-.values li {
-    background: var(--glass);
-    padding: 20px;
-    margin-bottom: 14px;
-    border-left: 5px solid var(--purple-mid);
-    border-radius: 14px;
-}
-
-/* =========================
-   WORK GRID
-========================= */
-.work-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 40px;
-}
-
-.work-card {
-    background: var(--glass);
-    padding: 40px;
-    border-radius: 26px;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-.work-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 30px 60px rgba(68,49,141,0.45);
+    transform: translateY(-4px);
 }
 
 /* =========================
@@ -279,25 +262,6 @@ section {
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: 40px;
     text-align: center;
-}
-
-/* =========================
-   MEDIA & RADIO
-========================= */
-.media-grid,
-.program-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 40px;
-}
-
-.media-card,
-.program-card,
-.radio-player {
-    background: var(--glass);
-    backdrop-filter: blur(16px);
-    border-radius: 24px;
-    padding: 34px;
 }
 
 /* =========================
@@ -326,6 +290,24 @@ footer {
     100% { background-position: 0% 50%; }
 }
 
+@keyframes sliderFade {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    25% { opacity: 1; }
+    35% { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
 /* =========================
    RESPONSIVE
 ========================= */
@@ -347,6 +329,14 @@ footer {
     h1 { font-size: 38px; }
 
     .hero-content { padding: 50px 28px; }
+
+    .about-split {
+        grid-template-columns: 1fr;
+    }
+
+    .about-slider {
+        height: 300px;
+    }
 
     section { padding: 90px 30px; }
 }
