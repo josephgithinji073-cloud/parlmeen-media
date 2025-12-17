@@ -47,35 +47,37 @@
 </header>
 
 <!-- PAGE HERO -->
-<section class="page-hero">
-    <h1>Media Hub</h1>
-    <p>Podcasts, documentaries, and community-driven storytelling</p>
+<section class="page-hero hero">
+    <div class="hero-content">
+        <h1>Media Hub</h1>
+        <p>Podcasts, documentaries, and community-driven storytelling</p>
+    </div>
 </section>
 
-<!-- PODCAST SECTION -->
-<section class="media-section">
+<!-- PODCASTS -->
+<section class="media-section reveal">
     <h2>Podcasts</h2>
 
     <div class="media-grid">
-        <div class="media-card">
+        <div class="media-card reveal">
             <h3>Voices of Change</h3>
             <p>
                 Conversations with women leaders and changemakers driving
                 social and economic transformation across Africa.
             </p>
-            <audio controls>
+            <audio controls preload="none">
                 <source src="media/podcast1.mp3" type="audio/mpeg">
                 Your browser does not support the audio element.
             </audio>
         </div>
 
-        <div class="media-card">
+        <div class="media-card reveal">
             <h3>Youth & Climate</h3>
             <p>
                 Young Africans share perspectives on climate action,
                 innovation, and community resilience.
             </p>
-            <audio controls>
+            <audio controls preload="none">
                 <source src="media/podcast2.mp3" type="audio/mpeg">
                 Your browser does not support the audio element.
             </audio>
@@ -83,12 +85,12 @@
     </div>
 </section>
 
-<!-- DOCUMENTARY SECTION -->
-<section class="media-section">
+<!-- DOCUMENTARIES -->
+<section class="media-section reveal">
     <h2>Documentaries</h2>
 
     <div class="media-grid">
-        <div class="media-card">
+        <div class="media-card reveal">
             <h3>Women Leading Change</h3>
             <p>
                 A documentary highlighting women’s leadership and grassroots
@@ -96,7 +98,7 @@
             </p>
         </div>
 
-        <div class="media-card">
+        <div class="media-card reveal">
             <h3>Climate Stories from the Community</h3>
             <p>
                 Real stories from communities responding to climate challenges
@@ -110,6 +112,9 @@
 <footer>
     <p>© 2025 Pearlmeen Media. All Rights Reserved.</p>
 </footer>
+
+<!-- SCROLL REVEAL SCRIPT -->
+<script src="js/main.js"></script>
 
 </body>
 </html>
