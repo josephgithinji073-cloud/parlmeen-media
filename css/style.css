@@ -69,7 +69,7 @@ header {
 header .logo img { max-width: 150px; height: auto; }
 
 header nav a {
-    color: #2a1b3d;
+    color: #000000;
     margin-left: 26px;
     text-decoration: none;
     font-size: 14px;
@@ -78,6 +78,19 @@ header nav a {
     text-transform: uppercase;
     transition: color 0.3s ease, transform 0.3s ease;
 }
+
+nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--purple-mid), var(--accent));
+  transition: width 0.3s ease;
+}
+
+
 header nav a:hover {
     color: var(--purple-mid);
     transform: translateY(-2px);
@@ -170,12 +183,12 @@ header nav a:hover {
     text-decoration: none;
     font-weight: 600;
     border-radius: 32px;
-    box-shadow: 0 15px 40px rgba(68,49,141,0.6);
+    box-shadow: 0 0 30px rgba(51, 9, 218, 0.6);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .btn:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
     box-shadow: 0 25px 60px rgba(68,49,141,0.9);
 }
 
@@ -184,6 +197,7 @@ header nav a:hover {
 ========================= */
 section {
     padding: 120px 80px;
+    margin: auto;
 }
 
 /* =========================
@@ -356,7 +370,7 @@ footer {
     }
 
     .hero-content {
-        padding: 46px 26px;
+        padding-top: 46px 26px;
     }
 
     .about-split {
