@@ -66,7 +66,7 @@ header {
     background: linear-gradient(135deg, var(--sand-light), var(--cream-light));
 }
 
-header .logo img { max-width: 150px; height: auto; }
+header .logo img { max-width: 200px; height: auto; }
 
 header nav a {
     color: #000000;
