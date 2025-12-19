@@ -64,24 +64,32 @@
 </section>
 
 <!-- LIVE RADIO -->
-<section>
+<section class="live-broadcast">
     <h2>Live Broadcast</h2>
 
-    <div class="radio-player">
-        <p><strong>Now Playing:</strong> Pearlmeen Community Radio</p>
+    <div id="radioBtn" class="radio-player" role="button" aria-label="Play Radio">
+        <div class="radio-icon">📻</div>
 
-        <!-- Replace stream URL when available -->
-        <audio controls preload="none" style="width:100%; margin-top:12px;">
-            <source src="https://classic105-atunwadigital.streamguys1.com/classic105" type="audio/mpeg">
-            Your browser does not support audio streaming.
-        </audio>
-
-        <p style="margin-top:12px; font-size:14px; opacity:0.8;">
-            Broadcasting stories, discussions, and music that reflect
-            African realities and aspirations.
-        </p>
+        <div class="radio-info">
+            <span class="radio-live">LIVE</span>
+            <h3 class="radio-title">Pearlmeen Community Radio</h3>
+            <p class="radio-status" id="radioStatus">Tap to listen</p>
+        </div>
     </div>
+
+    <audio id="radioStream" preload="none">
+        <source src="https://classic105-atunwadigital.streamguys1.com/classic105" type="audio/mpeg">
+    </audio>
+
+    <p class="radio-description">
+        Broadcasting stories, discussions, and music that reflect
+        African realities and aspirations.
+    </p>
 </section>
+
+<script src="js/main.js"></script>
+
+
 
 <!-- RADIO PROGRAMS -->
 <section>

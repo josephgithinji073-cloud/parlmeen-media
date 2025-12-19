@@ -1,3 +1,23 @@
+
+document.addEventListener("DOMContentLoaded", () => {
+    const radioBtn = document.getElementById("radioBtn");
+    const radio = document.getElementById("radioStream");
+
+    let isPlaying = false;
+
+    radioBtn.addEventListener("click", () => {
+        if (!isPlaying) {
+            radio.play();
+            radioBtn.textContent = "⏸";
+        } else {
+            radio.pause();
+            radioBtn.textContent = "▶";
+        }
+        isPlaying = !isPlaying;
+    });
+});
+
+
 /* =====================================================
    INTRO OVERLAY REMOVAL
 ===================================================== */
@@ -229,3 +249,6 @@ window.addEventListener("resize", () => {
   camera.updateProjectionMatrix();
   renderer.setSize(container.clientWidth, container.clientHeight);
 });
+
+
+// new redio
