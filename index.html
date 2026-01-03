@@ -24,10 +24,17 @@
     <meta name="twitter:description" content="Discover African stories that inspire positive change through media and community engagement.">
     <meta name="twitter:image" content="images/og-index.jpg">
 
+    
     <!-- Styles -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- LOADER -->
+  <div id="loader">
+    <div class="spinner"></div>
+  </div>
+
+
 
 <!-- HEADER -->
 <header>
@@ -54,11 +61,13 @@
         <h1>Telling African Stories That Inspire Change</h1>
         <p>
             An online African storytelling company empowering women, youth, and communities
-            through impactful media.
+            through impactful media. 
         </p>
         <a href="work.html" class="btn">Explore Our Stories</a>
     </div>
 </section>
+
+<canvas id="webgl"></canvas>
 
 <!-- ABOUT PREVIEW (UPDATED) -->
 <section class="content">
@@ -152,6 +161,13 @@
 <footer>
     <p>© 2025 Pearlmeen Media. All Rights Reserved.</p>
 </footer>
+
+ <!-- THREE.JS -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/controls/OrbitControls.js"></script>
+
+  <!-- YOUR JS -->
+  <script type="module" src="js/main2.js"></script>
 
 </body>
 </html>
