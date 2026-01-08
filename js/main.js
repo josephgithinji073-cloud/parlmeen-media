@@ -479,36 +479,4 @@ if ('IntersectionObserver' in window) {
   revealElements.forEach(el => observer.observe(el));
 }
 
-// Millisecond-precise animation performance monitoring
-let fps = 0;
-let frameCount = 0;
-const fpsDisplay = document.createElement('div');
-fpsDisplay.style.cssText = 'position:fixed;bottom:10px;left:10px;color:#00d9ff;font-family:monospace;font-size:12px;z-index:9999;display:none;background:rgba(0,0,0,0.5);padding:8px;border-radius:4px;';
-document.body.appendChild(fpsDisplay);
-
-function measureFPS() {
-  const now = performance.now();
-  frameCount++;
-  
-  if (now - (measureFPS.lastTime || now) >= 1000) {
-    fps = frameCount;
-    frameCount = 0;
-    measureFPS.lastTime = now;
-    fpsDisplay.textContent = `FPS: ${fps}`;
-  }
-  
-  requestAnimationFrame(measureFPS);
-}
-
-// Optional: Enable FPS monitor with Shift+F
-document.addEventListener('keydown', (e) => {
-  if (e.shiftKey && e.key === 'F') {
-    e.preventDefault();
-    fpsDisplay.style.display = fpsDisplay.style.display === 'none' ? 'block' : 'none';
-    if (fpsDisplay.style.display === 'block') {
-      measureFPS();
-    }
-  }
-});
-
 // new redio
