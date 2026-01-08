@@ -15,6 +15,34 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         isPlaying = !isPlaying;
     });
+
+    /* =========================
+       PARALLAX EFFECT FOR HERO
+    ========================= */
+    const hero = document.querySelector('.hero');
+    if (hero) {
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const heroRect = hero.getBoundingClientRect();
+            
+            // Only apply parallax when hero is in view
+            if (heroRect.bottom > 0) {
+                const parallaxValue = scrollY * 0.5;
+                hero.style.backgroundPosition = `center ${parallaxValue}px`;
+                hero.style.setProperty('--parallax-offset', `${parallaxValue}px`);
+            }
+        }, { passive: true });
+
+        // Mouse parallax effect (subtle)
+        document.addEventListener('mousemove', (e) => {
+            if (hero.getBoundingClientRect().top < window.innerHeight) {
+                const mouseX = (e.clientX / window.innerWidth - 0.5) * 20;
+                const mouseY = (e.clientY / window.innerHeight - 0.5) * 20;
+                hero.style.setProperty('--mouse-x', `${mouseX}px`);
+                hero.style.setProperty('--mouse-y', `${mouseY}px`);
+            }
+        }, { passive: true });
+    }
 });
 
 /* =========================
@@ -308,5 +336,179 @@ if (container && window.THREE) {
   }
 }
 
+/* =========================
+   ADVANCED INTERACTION PATTERNS
+========================= */
+
+// Easter Egg: Konami Code
+const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+let konamiIndex = 0;
+
+document.addEventListener('keydown', (e) => {
+  const key = e.key === 'b' ? 'b' : e.key === 'a' ? 'a' : e.key;
+  
+  if (key === konamiCode[konamiIndex]) {
+    konamiIndex++;
+    
+    if (konamiIndex === konamiCode.length) {
+      triggerEasterEgg();
+      konamiIndex = 0;
+    }
+  } else {
+    konamiIndex = key === konamiCode[0] ? 1 : 0;
+  }
+});
+
+// Easter Egg Trigger
+function triggerEasterEgg() {
+  const body = document.body;
+  body.style.filter = 'hue-rotate(360deg)';
+  
+  // Create particle burst
+  createParticleBurst(window.innerWidth / 2, window.innerHeight / 2, 30);
+  
+  // Play celebration animation
+  document.querySelectorAll('.btn').forEach(btn => {
+    btn.style.animation = 'konami 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards';
+  });
+  
+  // Reset after animation
+  setTimeout(() => {
+    body.style.filter = 'hue-rotate(0deg)';
+  }, 3000);
+}
+
+// Particle System
+function createParticleBurst(x, y, count = 20) {
+  for (let i = 0; i < count; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    particle.style.left = x + 'px';
+    particle.style.top = y + 'px';
+    
+    const angle = (Math.PI * 2 * i) / count;
+    const velocity = 3 + Math.random() * 3;
+    
+    particle.style.setProperty('--tx', `${Math.cos(angle) * velocity * 50}px`);
+    particle.style.animation = `float-up ${0.8 + Math.random() * 0.4}s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards`;
+    particle.style.background = `hsl(${200 + Math.random() * 40}, 100%, ${50 + Math.random() * 30}%)`;
+    particle.style.width = `${4 + Math.random() * 6}px`;
+    particle.style.height = particle.style.width;
+    particle.style.borderRadius = '50%';
+    
+    document.body.appendChild(particle);
+    
+    setTimeout(() => particle.remove(), 1200);
+  }
+}
+
+// Smooth scroll momentum
+document.documentElement.style.scrollBehavior = 'smooth';
+
+// Magnetic button effect on hover
+document.querySelectorAll('.btn').forEach(btn => {
+  btn.addEventListener('mousemove', (e) => {
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    
+    const distance = Math.hypot(x, y);
+    const strength = Math.max(0, 30 - distance) / 30;
+    
+    btn.style.transform = `translate(${x * strength * 0.3}px, ${y * strength * 0.3}px) scale(${1 + strength * 0.05})`;
+  });
+  
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = '';
+  });
+});
+
+// Glitch text effect on click
+document.querySelectorAll('.glitch-text').forEach(text => {
+  text.addEventListener('click', () => {
+    text.style.animation = 'glitch 0.3s steps(4, end) forwards';
+    setTimeout(() => {
+      text.style.animation = '';
+    }, 300);
+  });
+});
+
+// Page exit animation
+let isNavigating = false;
+
+document.querySelectorAll('a:not([target="_blank"]):not([href^="#"])').forEach(link => {
+  link.addEventListener('click', (e) => {
+    if (!isNavigating && !e.ctrlKey && !e.metaKey) {
+      e.preventDefault();
+      isNavigating = true;
+      
+      document.documentElement.classList.add('page-exit');
+      
+      setTimeout(() => {
+        window.location.href = link.href;
+      }, 800);
+    }
+  });
+});
+
+// Unexpected navigation - reveal on hover
+document.querySelectorAll('[data-text]').forEach(el => {
+  const originalText = el.textContent;
+  el.classList.add('nav-text-reveal');
+  el.setAttribute('data-text', el.getAttribute('data-text') || originalText);
+});
+
+// Scroll reveal with stagger
+const observerOptions = {
+  threshold: 0.15,
+  rootMargin: '0px 0px -100px 0px'
+};
+
+if ('IntersectionObserver' in window) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, index * 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+  
+  revealElements.forEach(el => observer.observe(el));
+}
+
+// Millisecond-precise animation performance monitoring
+let fps = 0;
+let frameCount = 0;
+const fpsDisplay = document.createElement('div');
+fpsDisplay.style.cssText = 'position:fixed;bottom:10px;left:10px;color:#00d9ff;font-family:monospace;font-size:12px;z-index:9999;display:none;background:rgba(0,0,0,0.5);padding:8px;border-radius:4px;';
+document.body.appendChild(fpsDisplay);
+
+function measureFPS() {
+  const now = performance.now();
+  frameCount++;
+  
+  if (now - (measureFPS.lastTime || now) >= 1000) {
+    fps = frameCount;
+    frameCount = 0;
+    measureFPS.lastTime = now;
+    fpsDisplay.textContent = `FPS: ${fps}`;
+  }
+  
+  requestAnimationFrame(measureFPS);
+}
+
+// Optional: Enable FPS monitor with Shift+F
+document.addEventListener('keydown', (e) => {
+  if (e.shiftKey && e.key === 'F') {
+    e.preventDefault();
+    fpsDisplay.style.display = fpsDisplay.style.display === 'none' ? 'block' : 'none';
+    if (fpsDisplay.style.display === 'block') {
+      measureFPS();
+    }
+  }
+});
 
 // new redio

@@ -360,11 +360,32 @@ try { animate(); } catch (e) { /* ignore */ }
 /* =========================
    RESIZE HANDLING
 ========================= */
-window.addEventListener("resize", () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
+function handleResize() {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  
+  camera.aspect = width / height;
   camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-});
+  renderer.setSize(width, height);
+  
+  // Ensure canvas fills entire screen and stays fixed
+  canvas.style.position = 'fixed';
+  canvas.style.top = '0';
+  canvas.style.left = '0';
+  canvas.style.width = '100vw';
+  canvas.style.height = '100vh';
+  canvas.style.display = 'block';
+  canvas.style.margin = '0';
+  canvas.style.padding = '0';
+  canvas.style.border = 'none';
+  canvas.style.transform = 'none';
+  canvas.style.zIndex = '0';
+}
+
+window.addEventListener("resize", handleResize);
+
+// Initial call to ensure proper sizing
+handleResize();
 
 /* =========================
    RESPONSIVE PERFORMANCE
