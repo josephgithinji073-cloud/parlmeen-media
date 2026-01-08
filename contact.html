@@ -108,9 +108,10 @@
                 <div style="margin-bottom:16px;">
                     <input
                         type="text"
-                        id="organization"
-                        name="organization"
-                        placeholder="Organization (Optional)"
+                        id="subject"
+                        name="subject"
+                        placeholder="Subject of Inquiry"
+                        required
                         style="width:100%; padding:14px; border-radius:14px; border:none;"
                     >
                 </div>
@@ -126,28 +127,73 @@
                     ></textarea>
                 </div>
 
-                <button type="submit" class="btn">Send Message</button>
+                <div id="formStatus" style="display:none; margin-bottom:16px; padding:14px; border-radius:8px;"></div>
+                <button type="submit" class="btn" id="submitBtn">Send Message</button>
             </form>
 
             <!-- Success Message -->
-            <p id="successMessage" style="display:none; margin-top:18px;">
-                Thank you. Your message has been received and we will respond shortly.
+            <p id="successMessage" style="display:none; margin-top:18px; color:#10b981; font-weight:600;">
+                ✓ Thank you! Your message has been received. We will respond within 48 hours.
             </p>
         </div>
 
     </div>
 </section>
 
+<!-- NEWSLETTER -->
+<section class="content">
+    <div style="background: rgba(30, 64, 175, 0.08); padding: 60px 40px; border-radius: 16px; border: 1px solid rgba(59, 130, 246, 0.3); text-align: center;">
+        <h2>Stay Connected</h2>
+        <p style="margin-bottom: 30px; max-width: 500px; margin-left: auto; margin-right: auto;">
+            Subscribe to our newsletter and stay updated on our latest documentaries, podcasts, and impactful African stories.
+        </p>
+        <form id="newsletterForm" style="display: flex; gap: 12px; max-width: 450px; margin: 0 auto;">
+            <input
+                type="email"
+                id="newsletterEmail"
+                name="email"
+                placeholder="Your email address"
+                required
+                style="flex: 1; padding: 14px; border-radius: 8px; border: none;"
+            >
+            <button type="submit" class="btn" style="white-space: nowrap;">Subscribe</button>
+        </form>
+        <p id="newsletterStatus" style="display:none; margin-top:16px; font-size:14px;"></p>
+    </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
-    <p>© 2025 Pearlmeen Media. All Rights Reserved.</p>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>Pearlmeen Media</h4>
+            <p>Creating African stories that inspire change.</p>
+        </div>
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="work.html">Work</a>
+            <a href="impact.html">Impact</a>
+            <a href="media.html">Media</a>
+            <a href="radio.html">Radio</a>
+        </div>
+        <div class="footer-section">
+            <h4>Connect</h4>
+            <a href="https://wa.me/254710359053" target="_blank">WhatsApp</a>
+            <a href="mailto:info@pearlmeenmedia.com">Email</a>
+            <a href="https://twitter.com/pearlmeenmedia" target="_blank">Twitter</a>
+            <a href="https://instagram.com/pearlmeenmedia" target="_blank">Instagram</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 Pearlmeen Media. All Rights Reserved. | <a href="#privacy" style="color: inherit; text-decoration: none;">Privacy Policy</a> | <a href="#terms" style="color: inherit; text-decoration: none;">Terms of Service</a></p>
+    </div>
 </footer>
 
 <!-- SCROLL REVEAL SCRIPT -->
 <script src="js/main.js"></script>
-
-<a href="https://wa.me/254710359053" class="whatsapp-btn" target="_blank">💬 WhatsApp</a>
-<a href="mailto:info@pearlmeenmedia.com" class="email-btn">✉️ Email</a>
+<script src="js/contact.js"></script>
 
 </body>
 </html>

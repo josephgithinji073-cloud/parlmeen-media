@@ -17,6 +17,52 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+/* =========================
+   ENHANCED MOTION + CURSOR
+   GSAP animations (guarded) and custom cursor micro-interactions
+========================= */
+// Custom cursor follow
+const customCursor = document.getElementById('cursor');
+if (customCursor) {
+  document.addEventListener('mousemove', (e) => {
+    customCursor.style.left = e.clientX + 'px';
+    customCursor.style.top = e.clientY + 'px';
+  });
+
+  // Hide cursor on touch devices
+  document.addEventListener('touchstart', () => { customCursor.style.display = 'none'; });
+}
+
+// GSAP intro + ScrollTrigger
+function initGsap() {
+  if (window.gsap && window.gsap.registerPlugin && window.ScrollTrigger) {
+    try {
+      gsap.registerPlugin(ScrollTrigger);
+
+      gsap.from('.hero-content', {
+        y: 48,
+        opacity: 0,
+        duration: 1.1,
+        ease: 'power3.out',
+        stagger: 0.08
+      });
+
+      // Button micro-interactions
+      document.querySelectorAll('.btn').forEach(btn => {
+        btn.addEventListener('mouseenter', () => gsap.to(btn, { scale: 1.04, duration: 0.18 }));
+        btn.addEventListener('mouseleave', () => gsap.to(btn, { scale: 1, duration: 0.24 }));
+        btn.addEventListener('mousedown', () => gsap.to(btn, { scale: 0.97, duration: 0.08 }));
+        btn.addEventListener('mouseup', () => gsap.to(btn, { scale: 1.02, duration: 0.12 }));
+      });
+    } catch (e) {
+      console.warn('GSAP init failed', e);
+    }
+  }
+}
+
+// Try to initialize GSAP after a short delay (deferred script)
+setTimeout(initGsap, 600);
+
 
 /* =====================================================
    INTRO OVERLAY REMOVAL
@@ -145,110 +191,122 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const container = document.querySelector(".impact-3d");
 
-// Scene
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x111111);
+if (container && window.THREE) {
+  try {
+    // Scene
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x111111);
 
-// Camera
-const camera = new THREE.PerspectiveCamera(
-  60,
-  container.clientWidth / container.clientHeight,
-  0.1,
-  1000
-);
-camera.position.set(0, 2, 6);
-
-// Renderer
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-renderer.setSize(container.clientWidth, container.clientHeight);
-container.appendChild(renderer.domElement);
-
-// Controls
-const controls = new THREE.OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
-controls.enablePan = false;
-
-// Lights
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-scene.add(ambientLight);
-const pointLight = new THREE.PointLight(0xffffff, 1.2);
-pointLight.position.set(5, 5, 5);
-scene.add(pointLight);
-
-// 🌍 Earth
-const earthGeo = new THREE.SphereGeometry(1.2, 64, 64);
-const earthMat = new THREE.MeshStandardMaterial({
-  color: 0x2194ce,
-  roughness: 0.6,
-  metalness: 0.3,
-});
-const earth = new THREE.Mesh(earthGeo, earthMat);
-scene.add(earth);
-
-// Floating 3D Objects representing your impact content
-const loader = new THREE.FontLoader();
-loader.load(
-  "https://threejs.org/examples/fonts/helvetiker_regular.typeface.json",
-  function (font) {
-    const createText = (message, position, color) => {
-      const textGeo = new THREE.TextGeometry(message, {
-        font: font,
-        size: 0.2,
-        height: 0.05,
-      });
-      const textMat = new THREE.MeshStandardMaterial({ color: color });
-      const mesh = new THREE.Mesh(textGeo, textMat);
-      mesh.position.copy(position);
-      scene.add(mesh);
-      return mesh;
-    };
-
-    const womenText = createText(
-      "Women Empowerment",
-      new THREE.Vector3(-2, 1.5, 0),
-      0xff69b4
+    // Camera
+    const camera = new THREE.PerspectiveCamera(
+      60,
+      Math.max(1, container.clientWidth / container.clientHeight),
+      0.1,
+      1000
     );
-    const youthText = createText(
-      "Youth Engagement",
-      new THREE.Vector3(2, 1, 1),
-      0x00ff00
-    );
-    const climateText = createText(
-      "Climate Action",
-      new THREE.Vector3(0, 2, -2),
-      0xffff00
-    );
+    camera.position.set(0, 2, 6);
 
-    const floatingObjects = [womenText, youthText, climateText];
+    // Renderer
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    container.appendChild(renderer.domElement);
 
-    // Animate floating effect
-    function animateObjects() {
-      const time = Date.now() * 0.001;
-      floatingObjects.forEach((obj, i) => {
-        obj.position.y += Math.sin(time + i) * 0.003;
-        obj.rotation.y += 0.005;
-      });
+    // Controls (guarded)
+    if (THREE.OrbitControls) {
+      const controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.enablePan = false;
     }
 
-    // Animate loop
-    function animate() {
-      requestAnimationFrame(animate);
-      earth.rotation.y += 0.002;
-      animateObjects();
-      controls.update();
-      renderer.render(scene, camera);
+    // Lights
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
+    const pointLight = new THREE.PointLight(0xffffff, 1.2);
+    pointLight.position.set(5, 5, 5);
+    scene.add(pointLight);
+
+    // 🌍 Earth
+    const earthGeo = new THREE.SphereGeometry(1.2, 64, 64);
+    const earthMat = new THREE.MeshStandardMaterial({
+      color: 0x2194ce,
+      roughness: 0.6,
+      metalness: 0.3,
+    });
+    const earth = new THREE.Mesh(earthGeo, earthMat);
+    scene.add(earth);
+
+    // Floating 3D Objects representing your impact content
+    if (THREE.FontLoader) {
+      const loader = new THREE.FontLoader();
+      loader.load(
+        "https://threejs.org/examples/fonts/helvetiker_regular.typeface.json",
+        function (font) {
+          const createText = (message, position, color) => {
+            const textGeo = new THREE.TextGeometry(message, {
+              font: font,
+              size: 0.2,
+              height: 0.05,
+            });
+            const textMat = new THREE.MeshStandardMaterial({ color: color });
+            const mesh = new THREE.Mesh(textGeo, textMat);
+            mesh.position.copy(position);
+            scene.add(mesh);
+            return mesh;
+          };
+
+          const womenText = createText(
+            "Women Empowerment",
+            new THREE.Vector3(-2, 1.5, 0),
+            0xff69b4
+          );
+          const youthText = createText(
+            "Youth Engagement",
+            new THREE.Vector3(2, 1, 1),
+            0x00ff00
+          );
+          const climateText = createText(
+            "Climate Action",
+            new THREE.Vector3(0, 2, -2),
+            0xffff00
+          );
+
+          const floatingObjects = [womenText, youthText, climateText];
+
+          // Animate floating effect
+          function animateObjects() {
+            const time = Date.now() * 0.001;
+            floatingObjects.forEach((obj, i) => {
+              obj.position.y = obj.position.y + Math.sin(time + i) * 0.003;
+              obj.rotation.y += 0.005;
+            });
+          }
+
+          // Animate loop
+          function animate() {
+            requestAnimationFrame(animate);
+            earth.rotation.y += 0.002;
+            animateObjects();
+            if (renderer && renderer.render) renderer.render(scene, camera);
+          }
+
+          animate();
+        }
+      );
     }
 
-    animate();
+    // Responsive
+    window.addEventListener("resize", () => {
+      try {
+        camera.aspect = Math.max(1, container.clientWidth / container.clientHeight);
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+      } catch (e) { /* ignore */ }
+    });
+
+  } catch (err) {
+    console.error('Impact 3D init failed:', err);
   }
-);
-
-// Responsive
-window.addEventListener("resize", () => {
-  camera.aspect = container.clientWidth / container.clientHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(container.clientWidth, container.clientHeight);
-});
+}
 
 
 // new redio

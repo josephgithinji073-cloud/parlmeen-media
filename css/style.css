@@ -1,7 +1,135 @@
 /* =========================
+     DESIGN SYSTEM VARIABLES
+     Spacing, motion, rhythm, type scale
+========================= */
+:root {
+        --space-xs: 8px;
+        --space-sm: 16px;
+        --space-md: 24px;
+        --space-lg: 40px;
+        --space-xl: 72px;
+        --space-xxl: 112px;
+
+        --transition-fast: 180ms;
+        --transition-medium: 360ms;
+        --easing: cubic-bezier(.22,.9,.35,1);
+
+        --cursor-size: 18px;
+}
+
+/* Accessible reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+}
+/* =========================
+     CURSOR + MICRO-INTERACTIONS
+========================= */
+#cursor {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: var(--cursor-size);
+    height: var(--cursor-size);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(1);
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.12);
+    mix-blend-mode: difference;
+    transition: transform var(--transition-fast) var(--easing), opacity var(--transition-fast) linear;
+    z-index: 99999;
+}
+
+button.btn, a.btn {
+    transition: transform var(--transition-fast) var(--easing), box-shadow var(--transition-fast) var(--easing);
+    will-change: transform;
+}
+
+button.btn:hover, a.btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 30px rgba(11, 78, 162, 0.12);
+}
+
+button.btn:active, a.btn:active {
+    transform: translateY(0) scale(0.99);
+}
+
+/* Cinematic hero tweaks */
+.hero .hero-content {
+    max-width: 920px;
+    padding: var(--space-xl) 24px;
+    margin: 0 auto;
+}
+
+/* Subtle parallax layering for hero background image */
+.hero::before { background-attachment: fixed; }
+/* =========================
    GOOGLE FONTS
 ========================= */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Libre+Baskerville:wght@400;700&display=swap');
+
+/* =========================
+   LOADER - RELOAD ANIMATION
+========================= */
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #111827 0%, #1f2937 50%, #0f172a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 0.6s ease-out;
+}
+
+#loader.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(59, 130, 246, 0.2);
+    border-top-color: #3b82f6;
+    border-right-color: #00d9ff;
+    border-radius: 50%;
+    animation: spin 1.2s linear infinite;
+    box-shadow: 
+        0 0 20px rgba(3, 105, 161, 0.4),
+        inset 0 0 20px rgba(0, 217, 255, 0.1);
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Pulse animation for the outer glow */
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 
+            0 0 20px rgba(3, 105, 161, 0.4),
+            inset 0 0 20px rgba(0, 217, 255, 0.1);
+    }
+    50% {
+        box-shadow: 
+            0 0 30px rgba(3, 105, 161, 0.6),
+            inset 0 0 30px rgba(0, 217, 255, 0.2);
+    }
+}
+
+.spinner {
+    animation: spin 1.2s linear infinite, pulse-glow 2s ease-in-out infinite;
+}
 
 /* =========================
    RESET
@@ -12,67 +140,63 @@
     box-sizing: border-box;
 }
 
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background: linear-gradient(135deg, #0f172a 0%, #111827 50%, #0f172a 100%);
+    color: #e5e7eb;
+}
+
 /* =========================
-   ROOT VARIABLES
+   ROOT VARIABLES - PROFESSIONAL COLOR SCHEME
 ========================= */
 :root {
-    --purple-dark: #2a1b3d;
-    --purple-mid: #44318d;
-    --sand-light: #e6d3a3;
-    --cream-light: #3deeb3;
+    /* Primary Colors - Modern Blue & Navy */
+    --primary: #1e40af;
+    --primary-dark: #1e3a8a;
+    --primary-light: #3b82f6;
+    
+    /* Secondary Colors - Professional Teal */
+    --secondary: #0369a1;
+    --secondary-light: #06b6d4;
+    
+    /* Accent Colors - Modern Cyan */
+    --accent: #00d9ff;
+    --accent-light: #06b6d4;
+    
+    /* Neutral Colors */
+    --gray-900: #111827;
+    --gray-800: #1f2937;
+    --gray-700: #374151;
+    --gray-600: #4b5563;
+    --gray-500: #6b7280;
+    --gray-400: #9ca3af;
+    --gray-300: #d1d5db;
+    --gray-200: #e5e7eb;
+    --gray-100: #f3f4f6;
+    --white: #ffffff;
+    
+    /* Status Colors */
+    --success: #10b981;
+    --warning: #f59e0b;
+    --error: #ef4444;
+    --info: #3b82f6;
+    
+    /* Text Colors */
+    --text-primary: #e5e7eb;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    
+    /* Glass Effect */
+    --glass: rgba(15, 23, 42, 0.5);
+    --glass-strong: rgba(15, 23, 42, 0.75);
+    
+    /* Borders */
+    --border-soft: rgba(255, 255, 255, 0.1);
 
-    --glass: rgba(255, 255, 255, 0.08);
-    --glass-strong: rgba(255, 255, 255, 0.12);
-    --border-soft: rgba(255, 255, 255, 0.18);
-
-    --text-muted: rgba(255, 255, 255, 0.75);
-}
-
-/* =========================
-   BODY
-========================= */
-body {
-    font-family: 'Inter', sans-serif;
-    line-height: 1.75;
-    background:
-        radial-gradient(circle at top, #340d97 0%, #0e0e0e 45%),
-        linear-gradient(180deg, #0b0b0b, #121212);
-    color: #9db3ae;
-}
-
-/* =========================
-   HEADINGS
-========================= */
-h1, h2, h3, h4 {
-    font-family: 'Libre Baskerville', serif;
-    letter-spacing: 0.3px;
-}
-
-h1 { font-size: 56px; line-height: 1.15; }
-h2 { font-size: 34px; text-align: center; margin-bottom: 60px; }
-h3 { font-size: 22px; margin-bottom: 12px; }
-
-/* =========================
-   HEADER
-========================= */
-header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2.5rem;
-  background:
-    linear-gradient(
-      90deg,
-      rgba(124, 207, 200, 0.418),
-      rgba(68,49,141,0.9)
-    ),
-    rgba(29, 75, 160, 0.918);
-  backdrop-filter: blur(18px);
-  border-bottom: 1px solid var(--border);
-  position: relative;
 }
 
 header::after {
@@ -82,21 +206,39 @@ header::after {
   left: 0;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, var(--primary), var(--accent));
-  box-shadow: 0 0 20px rgba(0, 207, 255, 0.6);
+  background: linear-gradient(90deg, var(--primary-light), var(--accent-light));
+  box-shadow: 0 0 20px rgba(0, 217, 255, 0.6);
+}
+
+header {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-soft);
 }
 
 header .logo img { max-width: 200px; height: auto; }
 
+header nav {
+    display: flex;
+    gap: 30px;
+}
+
 header nav a {
-    color: #000000;
-    margin-left: 26px;
+    color: var(--text-primary);
+    margin-left: 0;
     text-decoration: none;
     font-size: 14px;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     transition: color 0.3s ease, transform 0.3s ease;
+    position: relative;
 }
 
 nav a::after {
@@ -106,13 +248,13 @@ nav a::after {
   bottom: -6px;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--purple-mid), var(--accent));
+  background: linear-gradient(90deg, var(--primary-light), var(--accent-light));
   transition: width 0.3s ease;
 }
 
 
 header nav a:hover {
-    color: var(--purple-mid);
+    color: var(--accent-light);
     transform: translateY(-2px);
 }
 
@@ -149,10 +291,10 @@ nav a:hover::after {
     position: absolute;
     inset: 0;
     background: linear-gradient(-45deg,
-        rgba(68,49,141,0.6),
-        rgba(42,27,61,0.6),
-        rgba(68,49,141,0.6),
-        rgba(42,27,61,0.6));
+        rgba(30, 64, 175, 0.6),
+        rgba(3, 105, 161, 0.6),
+        rgba(30, 64, 175, 0.6),
+        rgba(3, 105, 161, 0.6));
     background-size: 400% 400%;
     z-index: 1;
     animation: gradientShift 15s ease infinite;
@@ -201,19 +343,23 @@ nav a:hover::after {
 ========================= */
 .btn {
     display: inline-block;
-    background: linear-gradient(135deg, var(--purple-dark), var(--purple-mid));
-    color: #fff;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: var(--white);
     padding: 14px 42px;
     text-decoration: none;
     font-weight: 600;
-    border-radius: 32px;
-    box-shadow: 0 0 30px rgba(51, 9, 218, 0.6);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.247);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    cursor: pointer;
+    border: none;
 }
 
 .btn:hover {
     transform: translateY(-4px);
-    box-shadow: 0 25px 60px rgba(68,49,141,0.9);
+    background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
+    box-shadow: 0 15px 40px rgba(3, 105, 161, 0.6);
 }
 
 /* =========================
@@ -394,7 +540,7 @@ footer {
     }
 
     .hero-content {
-        padding-top: 46px 26px;
+        padding: 46px 26px;
     }
 
     .about-split {
@@ -554,8 +700,14 @@ img {
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: -1;
+    z-index: 0;
+    pointer-events: none;
+    display: block !important;
 }
+
+/* If WebGL is not available, hide canvas and ensure dark background */
+.no-webgl #webgl { display: none !important; }
+.no-webgl body, .no-webgl html { background: linear-gradient(135deg, #0f172a 0%, #111827 50%); color: #e5e7eb; }
 
 /* Make content sit above background */
 header, section, footer {
@@ -567,4 +719,144 @@ header, section, footer {
 .hero {
     background: rgba(0, 0, 0, 0.4);
     color: white;
+}
+/* =========================
+   FOOTER
+========================= */
+footer {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 64, 175, 0.85));
+    border-top: 2px solid var(--accent-light);
+    padding: 80px 40px 30px;
+    margin-top: 100px;
+    backdrop-filter: blur(18px);
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 50px;
+    margin-bottom: 40px;
+}
+
+.footer-section h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--primary-light);
+    margin-bottom: 16px;
+    font-family: 'Libre Baskerville', serif;
+}
+
+.footer-section p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.footer-section a {
+    display: block;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 12px;
+    transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+    color: var(--accent-light);
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+.footer-bottom a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-bottom a:hover {
+    color: var(--accent-light);
+}
+
+/* =========================
+   FORM IMPROVEMENTS
+========================= */
+input[type="text"],
+input[type="email"],
+textarea {
+    background: rgba(255, 255, 255, 0.95);
+    color: #000000;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    outline: none;
+    border: 2px solid var(--primary-light) !important;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+    background: rgba(255, 255, 255, 1);
+}
+
+input[type="email"]::placeholder,
+input[type="text"]::placeholder,
+textarea::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.btn {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: var(--white);
+    padding: 14px 32px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(3, 105, 161, 0.4);
+    background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#formStatus {
+    padding: 14px;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-light);
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--primary-light);
+    font-size: 14px;
+    animation: slideInDown 0.3s ease;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
